@@ -1,0 +1,25 @@
+{
+  "name": "pc-remote",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "version": "electron --version",
+    "rebuild": "npm rebuild --runtime=electron --target=3.0.1 --disturl=https://atom.io/download/atom-shell --abi=64"
+  },
+  "author": "Jake Barter",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^3.0.1",
+    "robotjs": "^0.5.1"
+  },
+  "dependencies": {
+    "electron-notify": "^0.1.0",
+    "express": "^4.16.3",
+    "http": "0.0.0",
+    "node-notifier": "^5.2.1",
+    "ws": "^6.0.0"
+  }
+}
