@@ -8,6 +8,7 @@ import {
 } from 'react-native-paper';
 import ActionButton from './Components/ActionButton';
 import MainButtons from './Views/MainButtons';
+import ConnectToDevice from './Views/ConnectToDevice';
 import SocketProvider from './Components/SocketProvider';
 
 const webSocket = new Socket();
@@ -34,7 +35,9 @@ export default class App extends Component<Props> {
             routes: [
                 { key: 'main', title: 'Buttons', icon: 'settings-remote' },
                 { key: 'create', title: 'Create', icon: 'create' },
-            ]
+            ],
+            connected: false,
+            webSocket: new Socket(),
         };
     };
 
@@ -45,6 +48,10 @@ export default class App extends Component<Props> {
         create: CreateRoute,
     });
 
+    handleConnected = () => {
+        this.setState({connected: true});
+    };
+
     render() {
         return (
             <PaperProvider theme={theme}>
@@ -54,7 +61,11 @@ export default class App extends Component<Props> {
                         onIndexChange={this.handleIndexChange}
                         renderScene={this.renderScene}
                     />*/}
-                    <MainButtons/>
+                    {this.state.connected ? (
+                        <MainButtons/>
+                    ): (
+                        <ConnectToDevice connected={this.handleConnected}/>
+                    )}
                 </SocketProvider>
             </PaperProvider>
         );

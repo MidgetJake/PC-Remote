@@ -12,7 +12,7 @@
   "author": "Jake Barter",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^3.0.1",
+    "electron": "^3.0.3",
     "robotjs": "^0.5.1"
   },
   "dependencies": {
