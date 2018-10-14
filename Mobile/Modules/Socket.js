@@ -1,6 +1,10 @@
 class Socket {
-    constructor() {
-        this.ws = new WebSocket('ws://192.168.0.25:8653');
+    constructor(ws_options) {
+        const options = {
+            url: 'ws://localhost:8653',
+            ...ws_options,
+        };
+        this.ws = new WebSocket(options.url);
 
         this.ws.onmessage = message => {
             console.log('Message: ', message);
@@ -8,7 +12,6 @@ class Socket {
     }
 
     sendAction(action) {
-        console.log(action);
         this.ws.send(JSON.stringify(action))
     }
 
@@ -18,9 +21,19 @@ class Socket {
             delete this.ws;
             this.ws = new WebSocket('ws://' + ip + ':8653');
 
-            this.ws.onopen = () => (
-                resolve()
-            )
+            // Fail if the socket doesn't connect
+            const timeout = setTimeout(() => {
+                reject()
+            }, 10000);
+
+            this.ws.onmessage = message => {
+                console.log('Message: ', message);
+            };
+
+            this.ws.onopen = () => {
+                clearTimeout(timeout);
+                resolve();
+            };
         })
     }
 }

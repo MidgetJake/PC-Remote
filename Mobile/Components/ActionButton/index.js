@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, withTheme } from 'react-native-paper';
+import { Button, withTheme, Text, Card, TouchableRipple } from 'react-native-paper';
 import { SocketContext } from '../SocketProvider/context';
 
 type Props = {};
@@ -38,13 +38,29 @@ class ActionButton extends Component<Props> {
         socket.sendAction(action);
     };
 
+    openOptions = () => {
+        console.log('OPTIONS');
+    };
+
     render() {
-        const { children } = this.props;
+        const { children, theme } = this.props;
 
         return (
             <SocketContext.Consumer>
                 {socket => (
-                    <Button mode='contained' onPress={() => this.sendAction(socket)} style={{marginBottom: 10}}>{children}</Button>
+                    <Card
+                        style={{backgroundColor: theme.colors.primary, marginBottom: 15, overflow: 'hidden'}}
+                    >
+                        <TouchableRipple
+                            onPress={() => this.sendAction(socket)}
+                            style={{padding: 10}}
+                            onLongPress={() => this.openOptions()}
+                        >
+                            <Text style={{color: '#eee'}}>{children}</Text>
+                    {/*<Button mode='contained' onPress={() => this.sendAction(socket)} style={{marginBottom: 10}}>{children}</Button>*/}
+
+                        </TouchableRipple>
+                    </Card>
                 )}
             </SocketContext.Consumer>
         );

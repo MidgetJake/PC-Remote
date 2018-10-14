@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, AsyncStorage } from 'react-native';
-import { FAB } from 'react-native-paper';
+import { FAB, Appbar, withTheme } from 'react-native-paper';
 import ActionButton from '../../Components/ActionButton';
 import CreateMacro from '../../Views/CreateMacro';
 
 type Props = {};
-export default class MainButtons extends Component<Props> {
+class MainButtons extends Component<Props> {
+    static navigationOptions = ({ navigation }) => ({
+        header: (
+            <Appbar.Header>
+                <Appbar.Action icon="menu" onPress={() => navigation.openDrawer()} />
+                <Appbar.Content title="Macro Buttons" />
+            </Appbar.Header>
+        ),
+    });
+
     constructor(props) {
         super(props);
 
@@ -58,9 +67,10 @@ export default class MainButtons extends Component<Props> {
 
     render() {
         const { macros, open_create } = this.state;
+        const { theme } = this.props;
 
         return (
-            <View style={styles.back}>
+            <View style={{...styles.back, backgroundColor: theme.colors.background}}>
                 <ScrollView style={styles.back}>
                     <View style={styles.buttonRow}>
                         { this.state.macros }
@@ -79,9 +89,10 @@ export default class MainButtons extends Component<Props> {
     }
 }
 
+export default withTheme(MainButtons);
+
 const styles = StyleSheet.create({
     back: {
-        backgroundColor: '#444',
         flex: 1,
         padding: 5,
     },
